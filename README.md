@@ -1,7 +1,7 @@
-# web-onefx-boilerplate
+# web-playground
 
 ```bash
-nvm use 8.12.0
+nvm use 10.15.0
 npm install
 
 # prepare environment variable
@@ -12,4 +12,3 @@ npm run watch
 npm run build-production
 npm run start
 ```
-# web-playground

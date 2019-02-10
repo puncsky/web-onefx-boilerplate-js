@@ -1,19 +1,30 @@
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+import Eos from 'eosjs';
 
-import {Iotx, HttpProvider, utils} from 'iotex-client-js';
-//
-(async() => {
-  const iotx = new Iotx(new HttpProvider('http://159.89.223.147:14004'),
-    {walletProvider: new HttpProvider('https://iotexscan.io/api/wallet-core/')});
-  const unlockedWallet = await iotx.accounts.add('ad6ebd8f2ba474a4fe131c40378f9f48241932cb22effb36feea76f558c875a240a6aa01');
-  const receipt = await iotx.sendTransfer({
-    amount: utils.toRau('0.5', 'Iotx'),
-    sender: unlockedWallet.rawAddress,
-    senderPubKey: unlockedWallet.publicKey,
-    recipient: 'io1qyqsqqqqapqyp8md8w3d76x5qdrt275uyvv6530upe8cle',
-    gasPrice: '0',
-    gasLimit: 100000,
-    payload: '6d61786f',
+ScatterJS.plugins( new ScatterEOS() );
+
+const network = ScatterJS.Network.fromJson({
+  blockchain:'eos',
+  chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  host:'nodes.get-scatter.com',
+  port:443,
+  protocol:'https'
+});
+
+ScatterJS.connect('YourAppName', {network}).then(connected => {
+  if(!connected) return console.error('no scatter');
+
+  const eos = ScatterJS.eos(network, Eos);
+
+  ScatterJS.login().then(id => {
+    if(!id) return console.error('no identity');
+    const account = ScatterJS.account('eos');
+    const options = {authorization:[`${account.name}@${account.authority}`]};
+    eos.transfer(account.name, 'safetransfer', '0.0001 EOS', account.name, options).then(res => {
+      console.log('sent: ', res);
+    }).catch(err => {
+      console.error('error: ', err);
+    });
   });
-  console.log('ballsdfjklasjdflasjdklfjas');
-  console.log(receipt);
-})();
+});

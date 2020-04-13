@@ -1,19 +1,27 @@
-import process from 'global/process';
-import dotenv from 'dotenv';
-dotenv.config();
+const process = require('process');
+const {config} = require('dotenv');
+
+config();
 
 module.exports = {
   project: 'web-onefx-boilerplate',
   server: {
-    port: process.env.PORT || 4100,
+    routePrefix: '',
+    port: process.env.PORT || 5000,
+    proxy: false,
     staticDir: './dist',
     delayInitMiddleware: false,
     cookie: {
       secrets: ['insecure plain text', 'insecure secret here'],
     },
-  },
-  ssm: {
-    enabled: false,
+    noSecurityHeadersRoutes: {
+      '/api-gateway/': true,
+      '/api/': true,
+    },
+    noCsrfRoutes: {
+      '/api-gateway/': true,
+      '/api/': true,
+    },
   },
   gateways: {
     logger: {
@@ -24,8 +32,21 @@ module.exports = {
   analytics: {
     googleTid: 'TODO: replace with your googleTid',
   },
-  stripe: {
-    stripePubKey: 'pk_test_1yMRIhidzZOrBJ84mJNHqa4O',
-    stripePriKey: 'sk_test_5pGpbrSWDfkXbg1XoOOqQzQy',
+  csp: {
+    'default-src': ['none'],
+    'manifest-src': ['self'],
+    'style-src': ['self', 'unsafe-inline', 'https://fonts.googleapis.com/css'],
+    'frame-src': [],
+    'connect-src': [
+      'self',
+      'https://www.google-analytics.com/',
+      ...(process.env.API_GATEWAY_URL ? [process.env.API_GATEWAY_URL] : []),
+    ],
+    'child-src': ['self'],
+    'font-src': ['self', 'data:', 'https://fonts.gstatic.com/'],
+    'img-src': ['*', 'data:'],
+    'media-src': ['self'],
+    'object-src': ['self'],
+    'script-src': ['self', 'https://www.google-analytics.com/'],
   },
 };

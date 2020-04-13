@@ -22,7 +22,7 @@ export class ErrorPage extends PureComponent<Props> {
       <ContentPadding style={{backgroundColor: colors.ui02}}>
         <Helmet title={`${bar} - IoTeX`}/>
         <Flex {...FOOTER_ABOVE} center={true}>
-          <Image src={assetURL('/favicon.png')}/>
+          <Image src={assetURL('favicon.png')}/>
           <Flex column={true} margin='8px'>
             <h1>{title}</h1>
             <div>{info}</div>

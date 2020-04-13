@@ -176,7 +176,7 @@ const LogoWrapper = styled('a', {
 function Logo() {
   return (
     <LogoWrapper href='/'>
-      <Icon url={assetURL('/favicon.png')}/>
+      <Icon url={assetURL('favicon.png')}/>
     </LogoWrapper>
   );
 }

@@ -50,10 +50,10 @@ export class App extends Component<Props> {
             {rel: 'manifest', href: '/manifest.json'},
             {rel: 'apple-touch-icon', href: '/favicon.png'},
 
-            {rel: 'icon', type: 'image/png', sizes: 'any', href: assetURL('/favicon.png')},
+            {rel: 'icon', type: 'image/png', sizes: 'any', href: assetURL('favicon.png')},
 
             // styles
-            {rel: 'stylesheet', type: 'text/css', href: assetURL('/stylesheets/main.css')},
+            {rel: 'stylesheet', type: 'text/css', href: assetURL('stylesheets/main.css')},
             {href: 'https://fonts.googleapis.com/css?family=Share+Tech|Actor', rel: 'stylesheet', type: 'text/css'},
           ]}
         >
